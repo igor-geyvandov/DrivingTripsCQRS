@@ -25,16 +25,16 @@ This application uses the CQRS pattern to separate the logic between Commands (w
 
 **CQRS offers the following benefits:**
 
- - Scaling: it allows the read workload (_GetReportOfAllDriversQuery_) and write workloads (_AddTripCommand_) to scale independently.
- - Optimized data schema: read side can use schema that is optimized for queries, while the write side uses schema that is optimized for updates.
- - Separation of Concerns: segregating the read and write sides can result in models that are more maintainable and flexible. More complex business logic goes into the write model, and read model can be relatively simple. Storage for read and write model is also segregated.
- - Simple Queries: by storing a materialized view in the read store, the application can avoid complex joins when querying and handle a large volume of queries taxing compute resources.
-- Messaging: CQRS is commonly used with messaging to process Commands and publish update Events.
+ - **Scaling**: it allows the read workload (_GetReportOfAllDriversQuery_) and write workloads (_AddTripCommand_) to scale independently.
+ - **Optimized data schema**: read side can use schema that is optimized for queries, while the write side uses schema that is optimized for updates.
+ - **Separation of Concerns**: segregating the read and write sides can result in models that are more maintainable and flexible. More complex business logic goes into the write model, and read model can be relatively simple. Storage for read and write models is also segregated.
+ - **Simple Queries**: by storing a materialized view in the read store, the application can avoid complex joins when querying and handling a large volume of queries without taxing compute resources.
+- **Messaging**: CQRS is commonly used with messaging to process Commands and publish update Events.
 
 **Challenges of using CQRS pattern are:**
 
- - Complexity: CQRS can lead to more complex application design.
- - Eventual Consistency: by separating the read and write stores, the read data may get stale. Due to this the read store must be updated to reflect the changes to the write model, which may cause delay between command being processed and the data store being updated.
+ - **Complexity**: CQRS can lead to more complex application design.
+ - **Eventual Consistency**: by separating the read and write stores, the read data may get stale. Due to this the read store must be updated to reflect the changes to the write model, which may cause delay between command being processed and the data store being updated.
 
 **By applying CQRS, every method should be either:**
 
@@ -58,6 +58,14 @@ An event is a notification for something that has happened that triggers its lis
 **DrivingTripsCQRS flow and components:**
 
 <img src="https://github.com/igor-geyvandov/DrivingTripsCQRS/blob/main/Images/DrivingTripsCQRS.jpg?raw=true" width="800">
+
+**Implementation details and best practices:**
+
+ - MediatR library is used for in-process messaging.
+- Dependency Inversion Principle (the D in SOLID) is facilitated by dependency injection of astractions into high-level components, such as _IDriverReportRepository_.
+ - Use of Environment variables and use of Options pattern for AppSettings access.
+ - Use of asynchronous code for optimized data access and I/O.
+ 
 
 **DrivingTripsCQRS unit tests:**
 
