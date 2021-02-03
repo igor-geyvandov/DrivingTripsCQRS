@@ -15,7 +15,7 @@ using DrivingTripsCQRS.Events;
 
 namespace DrivingTripsCQRS
 {
-    class Program
+    class Program 
     {
         public static async Task Main(string[] args)
         {
