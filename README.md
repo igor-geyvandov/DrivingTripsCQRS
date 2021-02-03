@@ -36,6 +36,25 @@ This application uses the CQRS pattern to separate the logic between Commands (w
  - Complexity: CQRS can lead to more complex application design
  - Eventual Consistency: by separating the read and write stores, the read data may get stale. Due to this the read store must be updated to reflect the changes to the write model, which may cause delay between command being processed and the data store being updated
 
+By applying CQRS, every method should be either:
+
+ - a Command which performs an action and mutates state OR
+ - a Query which returns data but doesn’t change state
+
+**Command**
+
+A command is a message for some task to be performed in the system. It always uses an indicative tense like _AddDriver_. Commands do not return content in the response.
+
+**Query**
+
+A query is read operation. It can be performed multiple times and will not change the state of the system. The naming convention of the query is the same as command’s, like _GetDriversQuery_.
+
+**Events**
+
+An event is a notification for something that has happened that triggers its listeners to perform some task. It always uses a past-particle verb, like _DriverAdded_.
+
+<img src="https://github.com/igor-geyvandov/DrivingTripsCQRS/blob/main/Images/CQRS-Commands-Queries-Events.png?raw=true" width="600">
+
 **DrivingTripsCQRS unit tests:**
 
 DrivingTripsCQRS.Tests contains unit tests of several components of the DrivingTripsCQRS application. These unit tests perform isolated and focused testing of components that have external dependencies by mocking external dependency state or behavior.
